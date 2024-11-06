@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4486536933150597269}
   - component: {fileID: 1176765826337616831}
   - component: {fileID: 1357635904007216178}
-  m_Layer: 3
-  m_Name: Bullet
+  m_Layer: 0
+  m_Name: Enemy Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 8475003758790243916}
   - component: {fileID: 6201471942862035761}
   - component: {fileID: 1282748044735070319}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 8192223986405856718}
   - component: {fileID: 5374645765412084848}
   - component: {fileID: 916387938331689988}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: TrailEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5110,7 +5110,7 @@ GameObject:
   - component: {fileID: 1615268559924648488}
   - component: {fileID: 3599929508193915282}
   - component: {fileID: 1411169700570157909}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10000,7 +10000,7 @@ GameObject:
   - component: {fileID: 3717806611127298162}
   - component: {fileID: 7055311196020850878}
   - component: {fileID: 264076977004764259}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

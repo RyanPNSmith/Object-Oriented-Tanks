@@ -36,4 +36,9 @@ public class PlayerHealth : MonoBehaviour
         // - Restart level
         // - Play death animation
     }
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
 }
