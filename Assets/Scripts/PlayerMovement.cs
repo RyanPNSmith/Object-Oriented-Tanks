@@ -9,7 +9,18 @@ public class PlayerMovement : MonoBehaviour
     public Transform cameraTransform; // Assign your camera in the inspector
     public Transform tankBase;  // Assign the base/body of the tank
 
-    private void Update()
+    private Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.freezeRotation = true; // Prevent physics from rotating the tank
+        }
+    }
+
+    private void FixedUpdate() // Changed from Update to FixedUpdate for physics
     {
         // Get input from W/S keys (up/down) and A/D keys (left/right)
         float moveZ = Input.GetAxis("Vertical");   // Forward/backward
@@ -32,18 +43,18 @@ public class PlayerMovement : MonoBehaviour
         // Only rotate and move if there's actual input
         if (moveDirection.magnitude > 0.1f)
         {
-            // Calculate rotation for the tank base only
+            // Calculate rotation for the tank base
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            
+
             // Smoothly rotate the tank base towards movement direction
             tankBase.rotation = Quaternion.Lerp(
                 tankBase.rotation,
                 targetRotation,
-                rotationSpeed * Time.deltaTime
+                rotationSpeed * Time.fixedDeltaTime
             );
 
-            // Move in the direction
-            transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
+            // Use physics-based movement
+            rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
     }
 }

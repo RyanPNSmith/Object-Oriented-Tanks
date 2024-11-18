@@ -39,8 +39,9 @@ public class PlayerShoot : MonoBehaviour
         }
         else
         {
-            // If it doesn't hit anything, set a point far in the distance as the target
-            targetPosition = ray.GetPoint(100); // Adjust the distance as needed
+            // If it doesn't hit anything, set a point far in the distance as the target, but keep it grounded
+            Vector3 farPoint = ray.GetPoint(100); // Adjust the distance as needed
+            targetPosition = new Vector3(farPoint.x, firingPoint.position.y, farPoint.z); // Keep it at the firing point's height
         }
 
         // Calculate the initial velocity needed to hit the target with an arc
@@ -60,6 +61,7 @@ public class PlayerShoot : MonoBehaviour
             rb.velocity = velocity; // Apply calculated velocity
         }
     }
+
 
     Vector3 CalculateArcVelocity(Vector3 startPoint, Vector3 endPoint, float arcHeight)
     {
