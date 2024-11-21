@@ -15,10 +15,13 @@ public class ExplodingBox : MonoBehaviour
 
     private void Explode()
     {
+        Debug.Log("Explode method called");
         // Play the explosion effect
         if (explosionEffect != null)
         {
-            ParticleSystem effect = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            // Instantiate the effect slightly above the box
+            Vector3 effectPosition = transform.position + Vector3.up * 0.5f; // Adjust the height as needed
+            ParticleSystem effect = Instantiate(explosionEffect, effectPosition, Quaternion.identity);
             effect.Play();
             Destroy(effect.gameObject, effect.main.duration);
         }
@@ -26,4 +29,4 @@ public class ExplodingBox : MonoBehaviour
         // Destroy the box
         Destroy(gameObject);
     }
-} 
+}

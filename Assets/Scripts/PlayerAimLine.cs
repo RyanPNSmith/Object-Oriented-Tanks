@@ -5,16 +5,12 @@ public class PlayerAimLine : MonoBehaviour
     public LineRenderer lineRenderer;
     public Transform firePoint;
     public Color lineColor = Color.red;
-    
+
     [Header("Arc Settings")]
-    public float arcHeight = 2f;
     public int lineSegments = 25; // More segments = smoother arc
-    
-    [Header("Dash Settings")]
-    public float dashSize = 0.5f;
-    public float gapSize = 0.5f;
-    
+
     private Camera mainCamera;
+    private PlayerShoot playerShoot; // Reference to PlayerShoot script
 
     void Start()
     {
@@ -24,18 +20,24 @@ public class PlayerAimLine : MonoBehaviour
             enabled = false;
             return;
         }
-        
+
         // Set width once and don't modify it elsewhere
         lineRenderer.useWorldSpace = true;
         lineRenderer.widthMultiplier = 1f;  // Ensure multiplier is 1
-        
+
         // Set material properties
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.material.color = lineColor;
-        lineRenderer.textureMode = LineTextureMode.Tile;
-        lineRenderer.material.mainTexture = CreateDashTexture();
-        
+
         mainCamera = Camera.main;
+
+        // Get the PlayerShoot component
+        playerShoot = GetComponent<PlayerShoot>();
+        if (playerShoot == null)
+        {
+            Debug.LogError("PlayerShoot component not found on this GameObject.");
+            enabled = false;
+        }
     }
 
     void Update()
@@ -65,6 +67,8 @@ public class PlayerAimLine : MonoBehaviour
             return;
         }
 
+        // Use the arcHeight from PlayerShoot
+        float arcHeight = playerShoot.arcHeight;
         Vector3 velocity = CalculateArcVelocity(firePoint.position, targetPoint, arcHeight);
         float timeToTarget = EstimateTimeToTarget(firePoint.position, targetPoint, arcHeight);
         Vector3[] arcPoints = new Vector3[lineSegments];
@@ -73,8 +77,8 @@ public class PlayerAimLine : MonoBehaviour
         {
             float t = i / (float)(lineSegments - 1);
             float timeAtPoint = t * timeToTarget;
-            
-            Vector3 position = firePoint.position + velocity * timeAtPoint + 
+
+            Vector3 position = firePoint.position + velocity * timeAtPoint +
                               0.5f * Physics.gravity * timeAtPoint * timeAtPoint;
 
             // Check for invalid positions
@@ -104,7 +108,7 @@ public class PlayerAimLine : MonoBehaviour
             if (arcHeight <= 0) arcHeight = 0.1f;
             if (distanceXZ.magnitude < 0.001f) return Vector3.zero;
 
-            float time = Mathf.Sqrt(-2 * arcHeight / Physics.gravity.y) + 
+            float time = Mathf.Sqrt(-2 * arcHeight / Physics.gravity.y) +
                         Mathf.Sqrt(2 * (distance.y - arcHeight) / Physics.gravity.y);
 
             // Check for invalid time
@@ -140,7 +144,7 @@ public class PlayerAimLine : MonoBehaviour
         {
             if (arcHeight <= 0) arcHeight = 0.1f;
             Vector3 distance = endPoint - startPoint;
-            float time = Mathf.Sqrt(-2 * arcHeight / Physics.gravity.y) + 
+            float time = Mathf.Sqrt(-2 * arcHeight / Physics.gravity.y) +
                         Mathf.Sqrt(2 * (distance.y - arcHeight) / Physics.gravity.y);
 
             // Check for invalid time
@@ -156,27 +160,4 @@ public class PlayerAimLine : MonoBehaviour
             return 1f;
         }
     }
-
-    Texture2D CreateDashTexture()
-    {
-        int textureWidth = 32;
-        int textureHeight = 2;
-        Texture2D texture = new Texture2D(textureWidth, textureHeight);
-        
-        // Create dash pattern
-        for (int x = 0; x < textureWidth; x++)
-        {
-            for (int y = 0; y < textureHeight; y++)
-            {
-                if (x < textureWidth * dashSize / (dashSize + gapSize))
-                    texture.SetPixel(x, y, Color.white);
-                else
-                    texture.SetPixel(x, y, Color.clear);
-            }
-        }
-        
-        texture.wrapMode = TextureWrapMode.Repeat;
-        texture.Apply();
-        return texture;
-    }
-} 
+}

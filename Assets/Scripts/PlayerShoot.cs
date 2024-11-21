@@ -8,6 +8,7 @@ public class PlayerShoot : MonoBehaviour
     public Transform firingPoint;
     // Height adjustment factor for the arc
     public float arcHeight = 2f;
+    public float arcHeightChangeRate = 0.1f; // Rate of change for arc height
 
     [Header("Fire Rate")]
     public float fireRate = 0.5f;  // Time in seconds between shots
@@ -20,6 +21,17 @@ public class PlayerShoot : MonoBehaviour
         {
             Shoot();
             nextFireTime = Time.time + fireRate;  // Set the next allowed fire time
+        }
+
+        // Adjust arc height with E and Q keys
+        if (Input.GetKey(KeyCode.E))
+        {
+            arcHeight += arcHeightChangeRate * Time.deltaTime; // Increase arc height
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            arcHeight -= arcHeightChangeRate * Time.deltaTime; // Decrease arc height
+            arcHeight = Mathf.Max(0.1f, arcHeight); // Clamp to a minimum value
         }
     }
 
@@ -61,7 +73,6 @@ public class PlayerShoot : MonoBehaviour
             rb.velocity = velocity; // Apply calculated velocity
         }
     }
-
 
     Vector3 CalculateArcVelocity(Vector3 startPoint, Vector3 endPoint, float arcHeight)
     {
