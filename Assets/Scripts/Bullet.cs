@@ -3,21 +3,37 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public int explosionDamage = 20;      // Only explosion damage now
-    public float explosionRadius = 5f;     // Radius of explosion damage
+    public float explosionRadius = 5f;   // Radius of explosion damage
     public ParticleSystem trailEffect;
     public ParticleSystem explosionEffect;
+    public AudioSource audioSource;      // Assign your AudioSource in the inspector
+
+    private void Start()
+    {
+        // Play the shooting sound when the bullet is instantiated
+        if (audioSource != null)
+        {
+            audioSource.Play(); // Plays the assigned sound in the AudioSource
+        }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         // Create explosion and damage
         Explode();
-        
+
         // Destroy bullet immediately
         Destroy(gameObject);
     }
 
     private void Explode()
     {
+        // Play explosion sound
+        if (audioSource != null)
+        {
+            audioSource.Play(); // Play the explosion sound if the AudioSource is configured
+        }
+
         // Play effects
         if (trailEffect != null) trailEffect.Stop();
         if (explosionEffect != null)
@@ -62,4 +78,4 @@ public class Bullet : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
-} 
+}
