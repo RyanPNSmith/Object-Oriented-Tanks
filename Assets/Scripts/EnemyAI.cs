@@ -3,27 +3,21 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float moveSpeed = 3f;
-    public float rotationSpeed = 2f;
-    public float detectionRange = 10f;
-    public float shootingRange = 7f;
+    [SerializeField] private float moveSpeed = 3f;
+    [SerializeField] private float rotationSpeed = 2f;
 
     [Header("Combat Settings")]
-    public GameObject bulletPrefab;
-    public Transform firingPoint;
-    public float fireRate = 2f;
-    public float arcHeight = 5f;
+    [SerializeField] private float detectionRange = 10f;
+    [SerializeField] private float shootingRange = 7f;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform firingPoint;
+    [SerializeField] private float fireRate = 2f;
+    [SerializeField] private float arcHeight = 5f; // Height of the arc for the projectile
 
-    private Transform player;
+    [Header("References")]
+    public Transform player; // Assign the player object in the Unity Inspector
+
     private float nextFireTime = 0f;
-    private Vector3 randomPosition;
-    private bool isWandering = true;
-
-    private void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        SetNewRandomDestination();
-    }
 
     private void Update()
     {
@@ -33,56 +27,47 @@ public class EnemyAI : MonoBehaviour
 
         if (distanceToPlayer <= detectionRange)
         {
-            isWandering = false;
-            // Combat behavior
-            if (distanceToPlayer <= shootingRange && Time.time >= nextFireTime)
+            RotateTowardsPlayer();
+
+            if (distanceToPlayer > shootingRange)
+            {
+                MoveTowardsPlayer();
+            }
+            else if (Time.time >= nextFireTime)
             {
                 ShootAtTarget();
                 nextFireTime = Time.time + fireRate;
             }
-            // Move and rotate towards player
-            Vector3 direction = (player.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-            transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
-        }
-        else
-        {
-            Wander();
         }
     }
 
-    private void SetNewRandomDestination()
+    private void RotateTowardsPlayer()
     {
-        Vector2 randomCircle = Random.insideUnitCircle * 10f;
-        randomPosition = new Vector3(
-            transform.position.x + randomCircle.x,
-            transform.position.y,
-            transform.position.z + randomCircle.y
-        );
-        isWandering = true;
+        Vector3 direction = (player.position - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z)); // Ignore Y-axis
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    private void Wander()
+    private void MoveTowardsPlayer()
     {
-        if (isWandering)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, randomPosition, moveSpeed * Time.deltaTime);
-            if (Vector3.Distance(transform.position, randomPosition) < 0.1f)
-            {
-                SetNewRandomDestination();
-            }
-        }
+        Vector3 direction = (player.position - transform.position).normalized;
+        Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, player.position.z); // Lock Y-axis
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
     }
 
     private void ShootAtTarget()
     {
+        if (!bulletPrefab || !firingPoint) return;
+
+        // Calculate arc velocity
         Vector3 velocity = CalculateArcVelocity(firingPoint.position, player.position, arcHeight);
+
+        // Create and fire the bullet
         GameObject bullet = Instantiate(bulletPrefab, firingPoint.position, Quaternion.LookRotation(velocity.normalized));
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        if (rb != null)
+
+        if (bullet.TryGetComponent(out Rigidbody rb))
         {
-            rb.useGravity = true;
+            rb.useGravity = true; // Enable gravity for the arc
             rb.velocity = velocity;
         }
     }
@@ -90,14 +75,13 @@ public class EnemyAI : MonoBehaviour
     private Vector3 CalculateArcVelocity(Vector3 startPoint, Vector3 endPoint, float height)
     {
         Vector3 distance = endPoint - startPoint;
-        Vector3 distanceXZ = distance;
-        distanceXZ.y = 0;
+        Vector3 horizontalDistance = new Vector3(distance.x, 0, distance.z);
 
         float time = Mathf.Sqrt(-2 * height / Physics.gravity.y) +
-                    Mathf.Sqrt(2 * (distance.y - height) / Physics.gravity.y);
+                     Mathf.Sqrt(2 * (distance.y - height) / Physics.gravity.y);
 
         Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * Physics.gravity.y * height);
-        Vector3 velocityXZ = distanceXZ / time;
+        Vector3 velocityXZ = horizontalDistance / time;
 
         return velocityXZ + velocityY * -Mathf.Sign(Physics.gravity.y);
     }
@@ -109,12 +93,5 @@ public class EnemyAI : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, shootingRange);
-
-        if (isWandering)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(randomPosition, 0.5f);
-            Gizmos.DrawLine(transform.position, randomPosition);
-        }
     }
-} 
+}
