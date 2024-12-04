@@ -3,14 +3,14 @@
 Description:
 This game is a 3D action shooter where players control a character that can move, aim, and shoot projectiles at enemies. The game features health management for both players and enemies, dynamic shooting mechanics with arc trajectories, and a game over system that triggers when the player runs out of lives or all enemies are defeated.
 
-How to Install:
+# How to Install:
 Please download the latest patch of game: 
 https://github.com/RyanPNSmith/Object-Oriented-Tanks/blob/main/OOTanksWindows.7z
 
 Unzip this file 
 then run: Tanks (OOP Project).exe
 
-Key Features:
+# Key Features:
 
  - Player Movement: The player can move in a 3D space using WASD/Arrow keys, with smooth rotation towards the movement direction.
  - Shooting Mechanics: Players can shoot projectiles with adjustable arc heights by pressing Q to decrease and E to increase, allowing for strategic aiming and shooting.
@@ -19,13 +19,13 @@ Key Features:
  - Visual Effects: Particle systems are used for shooting trails and explosions, enhancing the visual experience.
  - Optimization so that it can fit on GitHub.
 
-Components:
+# Components:
  - Player: Controls movement and shooting, manages health and lives.
  - Enemies: AI-controlled characters that can detect and attack the player.
  - Health Packs: Collectible items that restore health to players or enemies.
  - Exploding Boxes: Objects that explode upon collision with bullets, adding environmental interaction.
 
-Technologies Used:
+# Technologies Used:
  - Unity Engine: The game is developed using Unity, leveraging its physics and rendering capabilities.
  - C# Programming: All game logic is implemented in C# scripts, managing interactions, health, and game states.
 
