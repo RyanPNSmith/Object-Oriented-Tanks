@@ -1,4 +1,4 @@
-#Object Oriented Tanks
+# Object Oriented Tanks
 
 Description:
 This game is a 3D action shooter where players control a character that can move, aim, and shoot projectiles at enemies. The game features health management for both players and enemies, dynamic shooting mechanics with arc trajectories, and a game over system that triggers when the player runs out of lives or all enemies are defeated.
@@ -13,7 +13,7 @@ then run: Tanks (OOP Project).exe
 Key Features:
 
  - Player Movement: The player can move in a 3D space using WASD/Arrow keys, with smooth rotation towards the movement direction.
- - Shooting Mechanics: Players can shoot projectiles with adjustable arc heights, allowing for strategic aiming and shooting.
+ - Shooting Mechanics: Players can shoot projectiles with adjustable arc heights by pressing Q to decrease and E to increase, allowing for strategic aiming and shooting.
  - Health System: Both players and enemies have health systems that manage damage and healing. Players can collect health packs to restore health.
  - Enemy AI: Enemies detect the player within a certain range and can move towards and shoot at the player.
  - Visual Effects: Particle systems are used for shooting trails and explosions, enhancing the visual experience.
@@ -29,7 +29,7 @@ Technologies Used:
  - Unity Engine: The game is developed using Unity, leveraging its physics and rendering capabilities.
  - C# Programming: All game logic is implemented in C# scripts, managing interactions, health, and game states.
 
-#Object Oriented Programming Principles In This Project
+# Object Oriented Programming Principles In This Project
 
 Object-Oriented Programming (OOP) principles are effectively utilized in this game project developed in C# and Unity, enhancing code organization, reusability, and maintainability.
 The project demonstrates encapsulation by defining each game entity, such as PlayerHealth and EnemyHealth, as separate classes. This structure allows for clear separation of concerns, with private variables protected from direct access and public methods provided for safe interaction. The use of [SerializeField] enables configuration in the Unity Inspector while maintaining encapsulation.
