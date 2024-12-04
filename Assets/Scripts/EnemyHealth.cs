@@ -40,4 +40,11 @@ public class EnemyHealth : MonoBehaviour
     {
         return currentHealth;
     }
+
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        Debug.Log($"Enemy healed by {amount}. Current health: {currentHealth}");
+    }
 }

@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     public float rotationSpeed = 10f; // How quickly the player turns
     public Transform cameraTransform; // Assign your camera in the inspector
     public Transform tankBase;  // Assign the base/body of the tank
-    public AudioSource audioSource; // Assign your AudioSource in the inspector
     private Rigidbody rb;
 
     private void Start()
@@ -43,11 +42,6 @@ public class PlayerMovement : MonoBehaviour
         // Only rotate and move if there's actual input
         if (moveDirection.magnitude > 0.1f)
         {
-            // Play sound if not already playing
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
-            }
 
             // Calculate rotation for the tank base
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
@@ -62,13 +56,6 @@ public class PlayerMovement : MonoBehaviour
             // Use physics-based movement
             rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
         }
-        else
-        {
-            // Stop sound if no movement
-            if (audioSource.isPlaying)
-            {
-                audioSource.Stop();
-            }
-        }
+
     }
 }

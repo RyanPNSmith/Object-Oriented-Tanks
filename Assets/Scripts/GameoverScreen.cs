@@ -21,23 +21,36 @@ public class GameOverManager : MonoBehaviour
 
     private void HandlePlayerDeath()
     {
+        var playerLives = FindObjectOfType<PlayerLives>(); // Safely get the PlayerLives component
+        if (playerLives != null && playerLives.GetCurrentLives() > 0)
+        {
+            // Don't trigger game over if the player has remaining lives
+            return;
+        }
+
         ShowGameOverCanvas();
     }
+
 
     private void HandleEnemyDeath()
     {
         remainingEnemies--;
+        Debug.Log($"Enemy died. Remaining enemies: {remainingEnemies}");
+
         if (remainingEnemies <= 0)
         {
+            Debug.Log("All enemies defeated. Game over triggered.");
             ShowGameOverCanvas();
         }
     }
 
-    private void ShowGameOverCanvas()
+
+    public void ShowGameOverCanvas()
     {
         gameOverCanvas.SetActive(true);
         Time.timeScale = 0f; // Pause the game
     }
+
 
     public void RestartGame()
     {
