@@ -14,21 +14,33 @@ then run: Tanks (OOP Project).exe
 # How To Play 
 
 Basic Controls
+
 Movement:
-Use the W (forward) and S (backward) keys to move your character.
-Use the A (left) and D (right) keys to strafe left and right.
+
+ - Use the W (forward) and S (backward) keys to move your character.
+ - Use the A (left) and D (right) keys to strafe left and right.
+   
 Camera Control:
-Move the mouse to aim, The aim line should follow the player's head or body.
+
+- Move the mouse to aim, The aim line should follow the player's head or body.
+  
 Shooting:
-Press the Left Mouse Button to shoot. The bullet will follow an arc trajectory based on your aim.
+
+- Press the Left Mouse Button to shoot. The bullet will follow an arc trajectory based on your aim.
+  
 Adjusting Arc Height:
-Press E to increase the arc height of your shots.
-Press Q to decrease the arc height.
+
+- Press E to increase the arc height of your shots.
+- Press Q to decrease the arc height.
 
 Game Objective
+
 Your Mission:
+
 Eliminate All Enemy Tanks: To win the game, you must destroy all enemy tanks. Use your shooting skills and strategic movement to take them down before they can defeat you.
+
 Game Over Condition:
+
 Stay Alive: If your player character's health reaches zero, you will die, and the game will end. Make sure to avoid enemy fire and collect health packs to keep your health up!
 
 # UML Diagram 
