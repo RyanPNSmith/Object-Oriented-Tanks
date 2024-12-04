@@ -1,45 +1,37 @@
-# Object Oriented Tanks
-Project Overview:
+#Object Oriented Tanks
 
-This project involves designing and implementing a 3D tank war game in Unity using C#. Inspired by the classic game "Battle City," players control a tank, avoid enemy attacks, and destroy enemy tanks. The game will incorporate core Object-Oriented Programming (OOP) principles and utilize design patterns to create a modular, scalable structure.
+Description:
+This game is a 3D action shooter where players control a character that can move, aim, and shoot projectiles at enemies. The game features health management for both players and enemies, dynamic shooting mechanics with arc trajectories, and a game over system that triggers when the player runs out of lives or all enemies are defeated.
 
-Key Game Features:
+How to Install:
+Please download the latest patch of game: 
+https://github.com/RyanPNSmith/Object-Oriented-Tanks/blob/main/OOTanksWindows.7z
 
-Player-Controlled Tank: Players can move their tank, fire projectiles, and navigate obstacles while avoiding enemy tanks.
-Enemy Tanks: Basic AI controls enemy tanks to patrol, chase, and attack the player. The game starts with six enemy tanks by default.
-MedPacks: Restores health for both player and enemy tanks when collected.
-Missiles: Fired by both player and enemy tanks, missiles deal damage to other tanks but are absorbed by walls.
-Walls: Act as indestructible obstacles that tanks and missiles cannot pass through.
-Explosions: Triggered when a tank is destroyed.
-Project Objectives:
+Unzip this file 
+then run: Tanks (OOP Project).exe
 
-Apply OOP principles to model real-world objects (e.g., Tank, Wall, Missile).
-Use design patterns (e.g., Factory, Strategy, Observer, Singleton) to ensure flexibility, reusability, and maintainability.
-Separate concerns to follow clean software design practices.
-Implement basic game mechanics, AI behaviors, and user interactions through Unity's 3D environment.
-Game Features and Requirements:
+Key Features:
 
-Core Classes/Components:
+ - Player Movement: The player can move in a 3D space using WASD/Arrow keys, with smooth rotation towards the movement direction.
+ - Shooting Mechanics: Players can shoot projectiles with adjustable arc heights, allowing for strategic aiming and shooting.
+ - Health System: Both players and enemies have health systems that manage damage and healing. Players can collect health packs to restore health.
+ - Enemy AI: Enemies detect the player within a certain range and can move towards and shoot at the player.
+ - Visual Effects: Particle systems are used for shooting trails and explosions, enhancing the visual experience.
+ - Optimization so that it can fit on GitHub.
 
-Tank: Represents player and enemy tanks, capable of movement, firing, and taking damage. The player tank is controlled by input, while enemy tanks have AI-driven behavior.
-Missile: Represents projectiles fired by tanks.
-Wall: Indestructible obstacles within the game environment.
-MedPack: Collectible item that restores health.
-Explosion: Visual effect triggered when a tank is destroyed.
-Game Mechanics:
+Components:
+ - Player: Controls movement and shooting, manages health and lives.
+ - Enemies: AI-controlled characters that can detect and attack the player.
+ - Health Packs: Collectible items that restore health to players or enemies.
+ - Exploding Boxes: Objects that explode upon collision with bullets, adding environmental interaction.
 
-Tank Movement: Player tank moves based on keyboard input and enemy tanks follow basic AI.
-Missile Firing: Tanks can fire missiles in the direction they are facing.
-Health System: Tracks health for all tanks and plays an explosion effect on destruction.
-Winning/Losing Conditions: The player wins by destroying all enemy tanks and loses if their tank is destroyed.
-Design Patterns:
+Technologies Used:
+ - Unity Engine: The game is developed using Unity, leveraging its physics and rendering capabilities.
+ - C# Programming: All game logic is implemented in C# scripts, managing interactions, health, and game states.
 
-Factory Pattern: Manages object creation (e.g., tanks, walls, missiles) for scalability.
-Strategy Pattern: Defines different movement behaviors for player-controlled and AI-controlled tanks.
-Observer Pattern: Manages game events (e.g., tank destruction, health pickup updates).
-Singleton Pattern: Controls shared resources like game score or map state.
-Game GUI:
+#Object Oriented Programming Principles In This Project
 
-Game Area: Displays tank movement, shooting, and obstacles.
-Health Bar: Shows player tank health.
-Score/Enemy Counter: Displays remaining enemies and player lives.
+Object-Oriented Programming (OOP) principles are effectively utilized in this game project developed in C# and Unity, enhancing code organization, reusability, and maintainability.
+The project demonstrates encapsulation by defining each game entity, such as PlayerHealth and EnemyHealth, as separate classes. This structure allows for clear separation of concerns, with private variables protected from direct access and public methods provided for safe interaction. The use of [SerializeField] enables configuration in the Unity Inspector while maintaining encapsulation.
+Inheritance is supported by the potential to create base classes, such as a Character class, which could encapsulate shared functionality for both players and enemies. This reduces code duplication and promotes reusability. Additionally, implementing interfaces for common behaviors (e.g., IDamageable) can further enhance inheritance.
+Polymorphism is evident in the ability to treat different classes as instances of a common superclass. This allows for method overriding in derived classes, enabling specific implementations while maintaining a unified interface. Interfaces also facilitate flexible interactions among various game components. Abstraction simplifies complex systems by focusing on essential properties and behaviors within each class. Each class is designed to manage specific aspects of the game, such as health or movement, allowing developers to work independently on components. Public methods abstract implementation details, enabling users to interact with classes without needing to understand their internal workings. Overall, the project adheres to OOP principles, leveraging C# and Unity's capabilities to create a well-structured and maintainable codebase. This approach not only enhances the current development but also lays a solid foundation for future expansions and improvements.
