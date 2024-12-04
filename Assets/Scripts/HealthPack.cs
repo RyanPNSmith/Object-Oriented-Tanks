@@ -16,6 +16,10 @@ public class HealthPack : MonoBehaviour
                 Debug.Log("Health pack collected by player.");
                 Destroy(gameObject); // Destroy the health pack after use
             }
+            else
+            {
+                Debug.Log("PlayerHealth component not found on player."); // Log if component is missing
+            }
         }
         else if (other.CompareTag("Enemy"))
         {
